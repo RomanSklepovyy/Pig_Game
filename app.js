@@ -34,4 +34,36 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
     diceDOM.style.display = 'block';
     diceDOM.src = 'dice-' + dice + '.png';
 
-})
+    // update the round score if rolled number not a 1
+    if (dice !== 1) {
+        // Add score
+        roundScore += dice;
+        document.querySelector('#current-' + activePlayer).textContent = roundScore;
+    } else {
+        // Next player
+        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+        roundScore = 0;
+        //Makes buttons inactivate
+        document.querySelector('.btn-roll').disabled = true;
+        document.querySelector('.btn-hold').disabled = true;
+
+        setTimeout(function () {
+
+            document.getElementById('current-0').textContent = '0';
+            document.getElementById('current-1').textContent = '0';
+
+            document.querySelector('.player-0-panel').classList.toggle('active');
+            document.querySelector('.player-1-panel').classList.toggle('active');
+
+            document.querySelector('.dice').style.display = 'none';
+
+            //Makes buttons activate
+            document.querySelector('.btn-roll').disabled = false;
+            document.querySelector('.btn-hold').disabled = false;
+
+        }, 2000);
+
+
+    }
+
+});
